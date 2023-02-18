@@ -23,28 +23,41 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.3.0'
   s.rubygems_version = '1.8.23'
 
-  s.files = `git ls-files`.split($RS).reject do |file|
-    file =~ %r{^(?:
-    spec/.*
-    |Gemfile
-    |Rakefile
-    |pronto.gif
-    |\.rspec
-    |\.gitignore
-    |\.rubocop.yml
-    |\.travis.yml
-    )$}x
-  end
+  s.files = [
+    "bin/pronto",
+    "lib/pronto.rb",
+    "lib/pronto/cli.rb",
+    "lib/pronto/comment.rb",
+    "lib/pronto/config.rb",
+    "lib/pronto/config_file.rb",
+    "lib/pronto/error.rb",
+    "lib/pronto/formatter/base.rb",
+    "lib/pronto/formatter/checkstyle_formatter.rb",
+    "lib/pronto/formatter/colorizable.rb",
+    "lib/pronto/formatter/formatter.rb",
+    "lib/pronto/formatter/json_formatter.rb",
+    "lib/pronto/formatter/null_formatter.rb",
+    "lib/pronto/formatter/text_formatter.rb",
+    "lib/pronto/formatter/text_message_decorator.rb",
+    "lib/pronto/gem_names.rb",
+    "lib/pronto/git/line.rb",
+    "lib/pronto/git/patch.rb",
+    "lib/pronto/git/patches.rb",
+    "lib/pronto/git/repository.rb",
+    "lib/pronto/logger.rb",
+    "lib/pronto/message.rb",
+    "lib/pronto/plugin.rb",
+    "lib/pronto/runner.rb",
+    "lib/pronto/runners.rb",
+    "lib/pronto/status.rb",
+    "lib/pronto/version.rb",
+    "pronto.gemspec"
+  ]
   s.test_files = []
   s.extra_rdoc_files = ['LICENSE', 'README.md']
   s.require_paths = ['lib']
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
-  s.add_runtime_dependency('gitlab', '>= 4.4.0', '< 5.0')
-  s.add_runtime_dependency('httparty', '>= 0.13.7', '< 1.0')
-  s.add_runtime_dependency('octokit', '>= 4.7.0', '< 7.0')
-  s.add_runtime_dependency('rainbow', '>= 2.2', '< 4.0')
-  s.add_runtime_dependency('rexml', '>= 3.2.5', '< 4.0')
   s.add_runtime_dependency('rugged', '>= 0.23.0', '< 2.0')
   s.add_runtime_dependency('thor', '>= 0.20.3', '< 2.0')
   s.add_development_dependency('bundler', '>= 1.15')

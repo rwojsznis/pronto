@@ -4,13 +4,6 @@ module Pronto
       @config_hash = config_hash
     end
 
-    %w[github gitlab bitbucket].each do |service|
-      ConfigFile::EMPTY[service].each do |key, _|
-        name = "#{service}_#{key}"
-        define_method(name) { ENV["PRONTO_#{name.upcase}"] || @config_hash[service][key] }
-      end
-    end
-
     def default_commit
       default_commit =
         ENV['PRONTO_DEFAULT_COMMIT'] ||
@@ -25,18 +18,6 @@ module Pronto
       consolidated
     end
 
-    def github_review_type
-      review_type =
-        ENV['PRONTO_GITHUB_REVIEW_TYPE'] ||
-        @config_hash.fetch('github_review_type', false)
-
-      if review_type == 'request_changes'
-        'REQUEST_CHANGES'
-      else
-        'COMMENT'
-      end
-    end
-
     def excluded_files(runner)
       files =
         if runner == 'all'
@@ -48,14 +29,6 @@ module Pronto
       Array(files)
         .flat_map { |path| Dir[path.to_s] }
         .map { |path| File.expand_path(path) }
-    end
-
-    def github_hostname
-      URI.parse(github_web_endpoint).host
-    end
-
-    def bitbucket_hostname
-      URI.parse(bitbucket_web_endpoint).host
     end
 
     def warnings_per_review
